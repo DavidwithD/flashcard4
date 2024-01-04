@@ -1,0 +1,31 @@
+.backup {
+  text-align: left;
+  margin: 10px;
+}
+.book-list {
+  background-color: darkcyan;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.book {
+  border: 1px solid seashell;
+  width: 30%;
+  margin: 20px;
+  padding: 10px;
+  display: block;
+  text-align: left;
+}
+.book-info .button-box {
+  width: 10%;
+  position: relative;
+}
+
+.book p {
+  font-size: 1rem;
+}
+
+.book-creator-form {
+  display: block;
+  text-align: left;
+}

@@ -1,0 +1,7 @@
+.create-panel {
+  padding: 20px 20px;
+  margin: 0;
+  border: 1px solid gray;
+  border-radius: 5px;
+  z-index: 1;
+}

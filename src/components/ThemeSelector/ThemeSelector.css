@@ -1,0 +1,14 @@
+.theme-light {
+  --background-color: white;
+  --font-color: black;
+}
+.theme-dark {
+  --background-color: rgba(0, 0, 0, 0.725);
+  --font-color: white;
+}
+.theme-selector {
+  padding: 10px 20px;
+  background-color: var(--background-color);
+  color: var(--font-color);
+  border-radius: 5px;
+}
