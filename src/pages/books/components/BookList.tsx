@@ -9,11 +9,12 @@ export default function BookList() {
   return (
     <div>
       <div className="book-list">
+        {books.length === 0 && <h3>Please create a new book.</h3>}
         {(books as TBook[]).map((book: TBook) => (
           <Book key={v4()} book={book} />
         ))}
+        <BookCreator mode="create" />
       </div>
-      <BookCreator mode="create" />
     </div>
   );
 }

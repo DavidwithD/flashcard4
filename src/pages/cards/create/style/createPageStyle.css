@@ -36,7 +36,7 @@ body {
   text-align: right;
 }
 .form-input input {
-  width: calc(100% - 0px);
+  width: calc(100% - 60px);
 }
 .list li,
 .list li p {

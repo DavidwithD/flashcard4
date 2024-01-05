@@ -8,9 +8,11 @@
   flex-wrap: wrap;
 }
 
-.book {
+.book,
+.book-creator {
   border: 1px solid seashell;
   width: 30%;
+  min-width: 200px;
   margin: 20px;
   padding: 10px;
   display: block;
@@ -23,9 +25,14 @@
 
 .book p {
   font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .book-creator-form {
   display: block;
   text-align: left;
+}
+.book-creator-form label,.book-creator-form input {
+  width: 100%;
 }

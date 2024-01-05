@@ -6,6 +6,12 @@
 .card-page header {
   height: 20vh;
 }
+.card-page header a::after {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  background-color: red;
+}
 .theme-selector {
   position: absolute;
   top: 10px;

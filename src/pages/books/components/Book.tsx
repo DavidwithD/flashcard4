@@ -22,7 +22,9 @@ export default function Book({ book }: any) {
         />
         <TrashCanIcon
           className={"delete-button"}
-          onClick={() => removeBook(book.id)}
+          onClick={() => {
+            if (confirm("delete?")) removeBook(book.id);
+          }}
           fillColor={fillColor}
         />
       </div>

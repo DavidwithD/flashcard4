@@ -21,35 +21,43 @@ export default function BookCreator({ book, mode, onCancel }: any) {
   return (
     <div className="book-creator">
       <form className="book-creator-form">
-        <label>
-          <span>name:</span>
-          <br />
-          <input
-            type="text"
-            placeholder="name"
-            defaultValue={book?.name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <br />
-        <label>
-          <span>description:</span>
-          <br />
-          <input
-            type="text"
-            placeholder="description"
-            defaultValue={book?.description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </label>
-        <br />
+        <LabeledTextInput
+          itemName="name"
+          defaultValue={book?.name}
+          consumeValue={setName}
+        />
+        <LabeledTextInput
+          itemName="description"
+          defaultValue={book?.description}
+          consumeValue={setDescription}
+        />
         <button className="btn btn-light" onClick={onSubmit}>
           {mode}
         </button>
-        <button className="btn btn-light" onClick={onCancel}>
-          cancel
-        </button>
+        {onCancel && (
+          <button className="btn btn-light" onClick={onCancel}>
+            cancel
+          </button>
+        )}
       </form>
+    </div>
+  );
+}
+
+function LabeledTextInput({ itemName, defaultValue, consumeValue }: any) {
+  return (
+    <div className="labeled-text-input">
+      <label>
+        <span>{itemName}:</span>
+        <br />
+        <input
+          type="text"
+          placeholder={itemName}
+          defaultValue={defaultValue}
+          onChange={(e) => consumeValue(e.target.value)}
+        />
+      </label>
+      <br />
     </div>
   );
 }

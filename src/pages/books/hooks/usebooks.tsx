@@ -2,12 +2,19 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { TBook } from "../../../types";
 import { saveJson, loadJson } from "../../../utils";
 const bookContext = createContext<any>(null);
-export const useBooks = () => useContext(bookContext);
+export const useBooks: () => {
+  books: TBook[];
+  getBook: (id: string) => TBook | undefined;
+  addBook: (newBook: TBook) => void;
+  removeBook: (id: string) => void;
+  replaceBook: (id: string, newBook: TBook) => void;
+} = () => useContext(bookContext);
 
 export default function BookProvider({ children }: any) {
   const [books, setBooks] = useState<TBook[]>(loadJson("books") || []);
 
-  const getBook = (id: string) => books.find((book) => book.id === id);
+  const getBook = (id: string): TBook | undefined =>
+    books.find((book) => book.id === id);
   const addBook = (newBook: TBook) => setBooks([...books, newBook]);
   const removeBook = (id: string) => setBooks(books.filter((b) => b.id !== id));
   const replaceBook = (id: string, newBook: TBook) => {
