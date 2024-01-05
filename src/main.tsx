@@ -4,8 +4,8 @@ import App from "./App";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.css";
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-function Fallback({ error, resetErrorBoundary }: FallbackProps) {
-  return <p>something went wrong!</p>;
+function Fallback({ error }: FallbackProps) {
+  return <p>something went wrong! {error.message}</p>;
 }
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
