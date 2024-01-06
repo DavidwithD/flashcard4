@@ -17,7 +17,9 @@ export default function Card({ card, mode }: CardProps) {
   if (quiz === "") return;
   const [side, setSide] = useState(true);
   const [edit, toggleEdit] = useReducer((edit) => !edit, false);
+  // hold input in card, in case blank reappear when filp back
   const [input, setInput] = useState("");
+  const [isCorrectAnswer, setIsCorrectAnswer] = useState(false);
   const { deleteCard, updateResult } = useCards();
   const ref = useRef<HTMLDivElement>(null);
   const onFlip = () => setSide((prev) => !prev);
@@ -26,8 +28,7 @@ export default function Card({ card, mode }: CardProps) {
     ${(correct / (uncorrect + correct + Number.MIN_VALUE)) * 255},
     0, 1)`;
 
-  const scroll = (option: ScrollOptions) =>
-    ref.current?.scrollIntoView(option);
+  const scroll = (option: ScrollOptions) => ref.current?.scrollIntoView(option);
 
   useEffect(() => {
     if (id === localStorage["currentCard"]) scroll({ behavior: "instant" });
@@ -71,6 +72,8 @@ export default function Card({ card, mode }: CardProps) {
                   id,
                   input,
                   setInput,
+                  isCorrectAnswer,
+                  setIsCorrectAnswer,
                   answer,
                   updateResult,
                   onfocus: () => scroll({ behavior: "smooth" }),

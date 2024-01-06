@@ -2,6 +2,8 @@ export default function Blank({
   id,
   input,
   setInput,
+  isCorrectAnswer,
+  setIsCorrectAnswer,
   answer,
   updateResult,
   onfocus,
@@ -31,13 +33,21 @@ export default function Blank({
   const answerWithoutSpace = removeSpace(answer);
   const inputWithoutSpace = removeSpace(input);
   const correctRatio = getCorrectRatio(answerWithoutSpace, inputWithoutSpace);
-  let isCorrect = correctRatio === 1;
+  let result = correctRatio === 1;
   let inputStyle = getStyle(correctRatio);
-  const correctStyle = isCorrect ? "blank-correct" : "";
+  if (!isCorrectAnswer && result) {
+    var cardsElement = document.getElementsByClassName("cards")[0];
+    cardsElement?.classList.add("cards-correct");
+    setTimeout(() => cardsElement?.classList.remove("cards-correct"), 200);
+    setIsCorrectAnswer(true);
+  }
+  if (isCorrectAnswer && !result) {
+    setIsCorrectAnswer(false);
+  }
   // event handlers
   const handleKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Tab" && !e.shiftKey && e.keyCode !== 229) {
-      updateResult(id, isCorrect);
+      updateResult(id, result);
     }
   };
 
@@ -46,7 +56,7 @@ export default function Blank({
   return (
     <div className="blank">
       <input
-        className={`blank-input form-control ${correctStyle}`}
+        className={`blank-input form-control`}
         style={{ fontSize: "1.5rem", ...inputStyle }}
         value={input}
         placeholder="input here"

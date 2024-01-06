@@ -2,6 +2,7 @@
   height: auto;
   background-color: var(--background-color);
   color: var(--font-color);
+  overflow: hidden;
 }
 .card-page header {
   height: 20vh;
@@ -79,9 +80,9 @@
 .note {
   font-weight: 200;
 }
-.blank-correct {
-  animation: shine 500ms;
-}
+/* .blank-correct {
+  animation: shine 100ms;
+} */
 .blank-correct::after {
   content: "correct!";
 }
@@ -99,5 +100,27 @@
   100% {
     border-width: thick;
     border-color: rgb(114, 255, 20);
+  }
+}
+
+.cards-correct {
+  animation: shake 200ms;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0px, 3px);
+  }
+  25% {
+    transform: translate(0px, -2px);
+  }
+  50% {
+    transform: translate(0px, 0px);
+  }
+  60% {
+    transform: translate(0px, 2px);
+  }
+  70% {
+    transform: translate(0px, 0px);
   }
 }
