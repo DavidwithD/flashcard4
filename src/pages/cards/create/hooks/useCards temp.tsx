@@ -6,7 +6,8 @@ export const useCards = () => useContext(cardsContext);
 
 export default function CardProvider({ bookId, children }: any) {
   const { getBook, replaceBook } = useBooks();
-  const [book] = useState(getBook(bookId));
+  const book = getBook(bookId);
+  if (!book) throw new Error("Book does not exist. ID" + bookId);
   const initMap = new Map<string, TCard>();
   if (book)
     (book.cards as TCard[]).forEach((card) => initMap.set(card.id, card));

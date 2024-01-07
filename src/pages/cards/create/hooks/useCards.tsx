@@ -19,7 +19,8 @@ export const useCards = (): TCardContext => useContext(cardsContext);
 
 export default function CardProvider({ bookId, children }: any) {
   const { getBook, replaceBook } = useBooks();
-  const [book] = useState<TBook>(getBook(bookId));
+  const book = getBook(bookId);
+  if (!book) throw new Error("Book does not exist. ID" + bookId);
   const [cards, setCards] = useState<TCard[]>(book?.cards ?? []);
 
   const newCard = (): TCard => ({
