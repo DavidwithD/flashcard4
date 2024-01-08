@@ -1,19 +1,12 @@
-import { memo, useEffect, useReducer, useRef, useState } from "react";
+import { useReducer, useRef, useState } from "react";
 import Blank from "./Blank";
-import "../style/Card.css";
 import { useCards } from "../../create/hooks/useCards";
 import CardEditor from "./CardEditor/CardEditor";
 import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
-import { TCard } from "../../../../types";
+import { CardProps } from "./Card";
 
-type CardProps = {
-  card: TCard;
-  mode: string;
-  sort: string;
-};
-
-export default function Card({ card, mode, sort }: CardProps) {
+export default function Card({ card, mode }: CardProps) {
   const { id, quiz, hint, answer, note, correct, uncorrect, rating } = card;
   if (quiz === "") return;
   const [side, setSide] = useState(true);
@@ -30,19 +23,16 @@ export default function Card({ card, mode, sort }: CardProps) {
     ${(correct / (uncorrect + correct + Number.MIN_VALUE)) * 255},
     0, 1)`;
 
-  const scroll = (option: ScrollOptions) => {
-    ref.current?.scrollIntoView(option);
-  };
+  const scroll = (option: ScrollOptions) => ref.current?.scrollIntoView(option);
 
-  useEffect(() => {
-    if (sort === "default" && id === localStorage["currentCard"])
-      scroll({ behavior: "instant" });
+  useLayoutEffect(() => {
+    if (id === localStorage["currentCard"]) scroll({ behavior: "instant" });
   }, []);
 
   const moveToTop = () => {
+    localStorage["currentCard"] = id;
     scroll({ behavior: "smooth" });
   };
-
   return (
     <div
       ref={ref}
@@ -117,14 +107,3 @@ export default function Card({ card, mode, sort }: CardProps) {
     </div>
   );
 }
-
-export const PureCard = memo(Card);
-
-/**
- * quiz: practice & A  | review
- * hint: practice & A
- * blank: practice & A
- * answer: practice & B  | review
- * note: practice & B  | review
- * creator: edit
- */

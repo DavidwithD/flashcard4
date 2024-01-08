@@ -1,17 +1,22 @@
+import { useState } from "react";
+
 export default function Blank({
   id,
   input,
   setInput,
-  isCorrectAnswer,
-  setIsCorrectAnswer,
+  prevResult,
+  setPrevResult,
   answer,
   updateResult,
   onfocus,
 }: any) {
   // states
+  const [inputStyle, setInputStyle] = useState({});
   // inner functions
   const removeSpace = (s: string) => s?.replaceAll(/\s/g, "") ?? "";
   const getCorrectRatio = (answer: string, input: string) => {
+    answer = removeSpace(answer);
+    input = removeSpace(input);
     return answer.startsWith(input) ? input.length / answer.length : 0;
   };
   const getStyle = (correctRatio: number) => {
@@ -29,28 +34,32 @@ export default function Blank({
         };
     }
   };
+  const fun = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInput(value);
+    const correctRatio = getCorrectRatio(answer, value);
+    setInputStyle(getStyle(correctRatio));
 
-  const answerWithoutSpace = removeSpace(answer);
-  const inputWithoutSpace = removeSpace(input);
-  const correctRatio = getCorrectRatio(answerWithoutSpace, inputWithoutSpace);
-  let result = correctRatio === 1;
-  let inputStyle = getStyle(correctRatio);
-  if (!isCorrectAnswer && result) {
-    var cardsElement = document.getElementsByClassName("cards")[0];
-    cardsElement?.classList.add("cards-correct");
-    setTimeout(() => cardsElement?.classList.remove("cards-correct"), 200);
-    setIsCorrectAnswer(true);
-  }
-  if (isCorrectAnswer && !result) {
-    setIsCorrectAnswer(false);
-  }
+    let nextResult = correctRatio === 1;
+    if (!prevResult && nextResult) {
+      // false => true
+      var cardsElement = document.getElementsByClassName("cards")[0];
+      cardsElement?.classList.add("cards-correct");
+      setTimeout(() => cardsElement?.classList.remove("cards-correct"), 200);
+      setPrevResult(nextResult);
+    }
+    if (prevResult && !nextResult) {
+      // true => false
+      setPrevResult(nextResult);
+    }
+  };
   // event handlers
   const handleKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Tab" && !e.shiftKey && e.keyCode !== 229) {
-      updateResult(id, result);
+      console.log(id, prevResult);
+      updateResult(id, prevResult);
     }
   };
-
   if (!answer) return null;
 
   return (
@@ -60,7 +69,7 @@ export default function Blank({
         style={{ fontSize: "1.5rem", ...inputStyle }}
         value={input}
         placeholder="input here"
-        onChange={(e) => setInput(e.target.value)}
+        onChange={fun}
         onKeyDown={handleKeydown}
         onFocus={onfocus}
       ></input>

@@ -11,7 +11,7 @@ type TCardContext = {
   deleteCard: (id: string) => any;
   replaceCard: (card: TCard) => any;
   replaceAllCards: (newCards: TCard[]) => any;
-  updateResult: (id: string, isCorrect: boolean) => any;
+  updateResult: (id: string, isCorrect: boolean) => void;
 };
 
 const cardsContext = createContext<any>(null);
@@ -45,7 +45,7 @@ export default function CardProvider({ bookId, children }: any) {
   const replaceAllCards = (newCards: TCard[]) => {
     setCards(newCards);
   };
-  const updateResult = (id: string, isCorrect: boolean) => {
+  const updateResult = (id: string, isCorrect: boolean): void => {
     const getPercentage = (part: number, total: number) =>
       Math.round((part / total) * 100);
     setCards(

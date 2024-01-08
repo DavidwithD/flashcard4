@@ -8,8 +8,8 @@ export default function BookList() {
   const { books } = useBooks();
   return (
     <div>
+      {books.length === 0 && <h3>Please create a new book.</h3>}
       <div className="book-list">
-        {books.length === 0 && <h3>Please create a new book.</h3>}
         {(books as TBook[]).map((book: TBook) => (
           <Book key={v4()} book={book} />
         ))}
