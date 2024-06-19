@@ -282,13 +282,13 @@ type PreviewerProps = {
 function Previewer({ keys, pageCards, endPrevirew, mode }: PreviewerProps) {
   const { addCards, replaceAllCards } = useCards();
   const [previewKey, setPreviewKey] = useState("all");
+  const navigate = useNavigate();
   // event
   const handleSubmit = () => {
     const ret = pageCards.filter((card) => card.quiz && card.quiz !== "");
     if (mode === "add") addCards(pageCards);
     else if (mode === "edit") replaceAllCards(ret);
     alert(`${pageCards.length} cards ${mode}ed.`);
-    const navigate = useNavigate();
     setTimeout(() => navigate(-1), 1000);
   };
   const handleKeyChange = (

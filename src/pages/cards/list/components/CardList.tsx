@@ -4,6 +4,7 @@ import { useCards } from "../../create/hooks/useCards";
 import { memo, useEffect, useState } from "react";
 import { TCard } from "../../../../types";
 import ThemeSelector from "../../../../components/ThemeSelector/ThemeSelector";
+import React from "react";
 type TMode = "practice" | "preview";
 type TSort = keyof TCard | "default";
 type TOrder = "ascending" | "descending";
@@ -16,6 +17,8 @@ const CardList = memo(function CardList({ id }: any) {
     localStorage["order"] ?? "ascending"
   );
   const [list, setList] = useState([...cards]);
+  const [lastVisit, setLastVisit] = useState<React.RefObject<HTMLDivElement>>();
+
   const sortList = (list: TCard[], sort: TSort, order: TOrder): TCard[] => {
     const copy = [...list];
     if (sort === "default") return copy;
@@ -43,9 +46,7 @@ const CardList = memo(function CardList({ id }: any) {
         <p>total {cards.length} cards</p>
 
         <Link to={"../"}>back</Link>
-        <span> </span>
         <Link to={"../add/" + id}>add new</Link>
-        <span> </span>
         <Link to={"../edit/" + id}>edit all</Link>
         <div className="option-form">
           <Select
@@ -78,12 +79,26 @@ const CardList = memo(function CardList({ id }: any) {
               refresh
             </button>
           )}
+          <button
+            onClick={() => {
+              console.log("lastVisit", lastVisit?.current?.offsetTop);
+              lastVisit?.current?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="btn btn-light"
+          >
+            last read
+          </button>
         </div>
       </header>
       <div className="cards">
         {cards.length === 0 && <h4>Please create new cards</h4>}
         {list.map((card: TCard) => (
-          <PureCard key={card.id} card={card} mode={mode} sort={sort} />
+          <PureCard
+            key={card.id}
+            card={card}
+            mode={mode}
+            fallbackRef={setLastVisit}
+          />
         ))}
       </div>
     </div>

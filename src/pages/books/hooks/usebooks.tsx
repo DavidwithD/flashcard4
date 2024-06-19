@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { TBook } from "../../../types";
 import { saveJson, loadJson } from "../../../utils";
+import { v4 } from "uuid";
 const bookContext = createContext<any>(null);
 export const useBooks: () => {
   books: TBook[];
@@ -11,7 +12,36 @@ export const useBooks: () => {
 } = () => useContext(bookContext);
 
 export default function BookProvider({ children }: any) {
-  const [books, setBooks] = useState<TBook[]>(loadJson("books") || []);
+  const sampleBook = {
+    id: 0,
+    name: "英語練習",
+    description: "簡単な英語翻訳の練習問題",
+    cards: [
+      {
+        id: v4(),
+        quiz: "次世代を実装する",
+        hint: "",
+        answer: "implement next generation",
+        note: "generation:世代",
+        correct: 0,
+        uncorrect: 0,
+        rating: 0,
+      },
+      {
+        id: v4(),
+        quiz: "新技術で未来を作り出す",
+        hint: "名詞の複数",
+        answer: "create the future with new technologies",
+        note: "technology:技術",
+        correct: 0,
+        uncorrect: 0,
+        rating: 0,
+      },
+    ],
+  };
+  const [books, setBooks] = useState<TBook[]>(
+    loadJson("books") || [sampleBook]
+  );
 
   const getBook = (id: string): TBook | undefined =>
     books.find((book) => book.id === id);

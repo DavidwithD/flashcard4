@@ -1,0 +1,25 @@
+* {
+  border: 1px grey solid;
+}
+.edit-area textarea {
+  width: 100%;
+}
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.content span {
+  white-space: break-spaces;
+}
+.correct {
+  color: greenyellow;
+}
+.blank.true {
+  color: greenyellow;
+}
+.key_button_container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+}

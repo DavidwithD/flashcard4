@@ -61,17 +61,21 @@
   justify-content: center;
 }
 
-.edit-button {
-  z-index: 1;
-}
-
-.delete-button {
-  z-index: 1;
-}
-
+.edit-button,
+.delete-button,
 .statistics {
-  color: rgb(117, 118, 119);
+  z-index: 1;
+  fill: var(--font-color);
+  fill-opacity: 0.7;
+  color: var(--font-color);
+  opacity: 0.7;
   font-size: medium;
+}
+.edit-button:hover,
+.delete-button:hover,
+.statistics:hover {
+  fill-opacity: 1;
+  opacity: 1;
 }
 
 .hint {

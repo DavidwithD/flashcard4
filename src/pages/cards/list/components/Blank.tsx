@@ -56,7 +56,6 @@ export default function Blank({
   // event handlers
   const handleKeydown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Tab" && !e.shiftKey && e.keyCode !== 229) {
-      console.log(id, prevResult);
       updateResult(id, prevResult);
     }
   };

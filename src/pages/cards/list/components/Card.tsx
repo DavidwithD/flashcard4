@@ -10,10 +10,10 @@ import { TCard } from "../../../../types";
 type CardProps = {
   card: TCard;
   mode: string;
-  sort: string;
+  fallbackRef: any;
 };
 
-export default function Card({ card, mode, sort }: CardProps) {
+export default function Card({ card, mode, fallbackRef }: CardProps) {
   const { id, quiz, hint, answer, note, correct, uncorrect, rating } = card;
   if (quiz === "") return;
   const [side, setSide] = useState(true);
@@ -24,7 +24,7 @@ export default function Card({ card, mode, sort }: CardProps) {
   const { deleteCard, updateResult } = useCards();
   const ref = useRef<HTMLDivElement>(null);
 
-  const onFlip = () => setSide((prev) => !prev);
+  const flip = () => setSide((prev) => !prev);
   const color = `rgba(
     ${(uncorrect / (uncorrect + correct + Number.MIN_VALUE)) * 255},
     ${(correct / (uncorrect + correct + Number.MIN_VALUE)) * 255},
@@ -34,20 +34,20 @@ export default function Card({ card, mode, sort }: CardProps) {
     ref.current?.scrollIntoView(option);
   };
 
-  useEffect(() => {
-    if (sort === "default" && id === localStorage["currentCard"])
-      scroll({ behavior: "instant" });
-  }, []);
-
   const moveToTop = () => {
     scroll({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    if (localStorage["currentCard"] === id) fallbackRef(ref);
+  });
 
   return (
     <div
       ref={ref}
       className={`container card flash-card`}
       onClick={() => {
+        fallbackRef(ref);
         localStorage["currentCard"] = id;
       }}
     >
@@ -99,7 +99,7 @@ export default function Card({ card, mode, sort }: CardProps) {
               <p className="note">{note}</p>
             )}
             {mode === "practice" && (
-              <div className="flip-button" onClick={onFlip}></div>
+              <div className="flip-button" onClick={flip}></div>
             )}
           </>
         )}

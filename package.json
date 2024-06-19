@@ -18,6 +18,7 @@
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.1",
     "jsonfile": "^6.1.0",
+    "nlp": "^0.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.12",
