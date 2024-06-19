@@ -7,7 +7,7 @@ import EditButton from "./EditButton";
 import DeleteButton from "./DeleteButton";
 import { TCard } from "../../../../types";
 
-type CardProps = {
+export type CardProps = {
   card: TCard;
   mode: string;
   fallbackRef: any;

@@ -1,4 +1,4 @@
-import { useReducer, useRef, useState } from "react";
+import { useLayoutEffect, useReducer, useRef, useState } from "react";
 import Blank from "./Blank";
 import { useCards } from "../../create/hooks/useCards";
 import CardEditor from "./CardEditor/CardEditor";
