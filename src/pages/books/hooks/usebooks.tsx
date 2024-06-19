@@ -13,7 +13,7 @@ export const useBooks: () => {
 
 export default function BookProvider({ children }: any) {
   const sampleBook = {
-    id: 0,
+    id: v4(),
     name: "英語練習",
     description: "簡単な英語翻訳の練習問題",
     cards: [
